@@ -1,0 +1,10 @@
+spring:
+      datasource:
+                 url: jdbc:postgresql://localhost:5432/silcam
+                 username: silcam
+                 password: silcam04
+                 
+      jpa:
+          hibernate:
+                    ddl-auto: create-drop
+                 

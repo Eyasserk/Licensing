@@ -1,0 +1,44 @@
+app:
+    name: '@pom.artifactId@'
+    version: '@pom.version@'
+info:
+    version: '@pom.version@'
+
+springfox:
+    documentation:
+        swagger:
+            v2:
+                path: /swagger.json
+ 
+
+spring:
+     data:
+         mongodb:
+              uri: mongodb://localhost:27017/dbgis
+     datasource:
+         url: jdbc:postgresql://localhost:5432/silcam
+         username: silcam
+         password: silcam04
+     jpa:
+         hibernate:
+              ddl-auto: validate
+     jackson:
+         serialization:
+              fail-on-empty-beans: false
+     mail:
+         host: smtp.boaweng.gsnetcloud.corp
+         port: 25
+         user:
+         password:
+         protocol: smtp
+         tls: false
+         auth: false
+         from: c3video.no_reply@produban.com
+security:
+    wso2:
+        enabled: false
+    basic:
+        enabled: false
+management:
+    security:
+        enabled: false
