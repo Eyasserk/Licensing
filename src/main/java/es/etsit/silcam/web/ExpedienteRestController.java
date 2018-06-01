@@ -2,6 +2,7 @@ package es.etsit.silcam.web;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -28,9 +29,15 @@ import es.etsit.silcam.bean.response.ErrorResponse;
 import es.etsit.silcam.bean.response.ExpedienteResponse;
 import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.Mineral;
+import es.etsit.silcam.entity.PersonaFisica;
+import es.etsit.silcam.entity.PersonaJuridica;
+import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.entity.gis.Parcela;
+import es.etsit.silcam.filter.ExpedienteFilter;
 import es.etsit.silcam.service.ExpedienteService;
 import es.etsit.silcam.service.MineralService;
+import es.etsit.silcam.service.PersonaFisicaService;
+import es.etsit.silcam.service.PersonaJuridicaService;
 import es.etsit.silcam.service.ProvinciaService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +51,8 @@ public class ExpedienteRestController {
 	private ExpedienteService expedienteService;
 	private MineralService mineralService;
 	private ProvinciaService provinciaService;
+	private PersonaFisicaService personaFisicaService;
+	private PersonaJuridicaService personaJuridicaService;
 	
 	@Autowired
 	public void setExpedienteService(ExpedienteService expedienteService) {
@@ -60,6 +69,16 @@ public class ExpedienteRestController {
 		this.provinciaService = provinciaService;
 	}
 	
+	@Autowired
+	public void setPersonaFisicaService(PersonaFisicaService personaFisicaService) {
+		this.personaFisicaService = personaFisicaService;
+	}
+	
+	@Autowired
+	public void setPersonaJuridicaService(PersonaJuridicaService personaJuridicaService) {
+		this.personaJuridicaService = personaJuridicaService;
+	}
+	
 	
 	/**
 	 * 
@@ -73,10 +92,21 @@ public class ExpedienteRestController {
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorResponse.class),
 			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorResponse.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
-	public @ResponseBody ResponseEntity<List<ExpedienteResponse>> find() {
+	public @ResponseBody ResponseEntity<List<ExpedienteResponse>> find(
+			
+			) {
 		log.info("Request find expedientes");
 		
-		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(null)), HttpStatus.OK);
+		ExpedienteFilter filter = new ExpedienteFilter();
+		filter.setId(2L);
+		filter.setNumeroExpediente("201806");
+		filter.setIdSolicitante(1L);
+		filter.setTipoSolicitanteId(1L);
+		filter.setEstadoSolicitudId(1L);
+		filter.setFaseExpedienteId(1L);
+		filter.setFechaInicioEnd(new Date());
+		
+		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(filter)), HttpStatus.OK);
 		
 	}
 	
@@ -106,11 +136,26 @@ public class ExpedienteRestController {
 		ExpedienteResponse response = null;
 		if(expediente != null) {
 			response = new ExpedienteResponse();
+			response.setArea(expediente.getArea());
+			response.setProvincias(expediente.getProvincias());
 			response.setEstado(expediente.getEstado());
 			response.setFase(expediente.getFase());
 			response.setFechaInicio(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicio()));
 			response.setId(expediente.getId());
 			response.setNumeroExpediente(expediente.getNumeroExpediente());
+			if(expediente.getTipoSolicitante().getId() == 1) {
+				//Persona Física
+				PersonaFisica persona = personaFisicaService.findById(expediente.getIdSolicitante());
+				response.setNombreSolicitante(persona.getNombre()+" "+persona.getApellido1()+" "+(persona.getApellido2() == null ? "": persona.getApellido2()));
+				response.setNumeroIdentificacionSolicitante(persona.getNumeroIdentificacion());
+			}else {
+				//Persona Jurídica
+				PersonaJuridica persona = personaJuridicaService.findById(expediente.getIdSolicitante());
+				response.setNombreSolicitante(persona.getRazonSocial());
+				response.setNumeroIdentificacionSolicitante(persona.getNumeroIdentificacion());
+			}
+			response.setParcelas(expediente.getParcelas());
+			response.setMinerales(expediente.getMinerales());
 		}
 		return response;
 	}
@@ -145,6 +190,10 @@ public class ExpedienteRestController {
 		}
 		expediente.setParcelas(parcelas);
 		expediente.setMinerales(minerales);
+		expediente.setIdSolicitante(request.getIdPersonaSolicitante());
+		TipoPersona tipoPersona = new TipoPersona();
+		tipoPersona.setId(request.getTipoPersonaSolicitante());
+		expediente.setTipoSolicitante(tipoPersona);
 		return expediente;
 	}
 	

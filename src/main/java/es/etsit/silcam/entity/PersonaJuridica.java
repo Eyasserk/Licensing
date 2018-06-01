@@ -21,7 +21,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class PersonaJuridica {
+public class PersonaJuridica{
 
 	@Id
 	@GeneratedValue( strategy=GenerationType.AUTO )

@@ -42,3 +42,12 @@ security:
 management:
     security:
         enabled: false
+logging:
+    level:
+        org:
+           hibernate:
+               SQL: debug
+               type:
+                   descriptor:
+                       sql:
+                          BasicBinder: TRACE

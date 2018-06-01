@@ -19,10 +19,10 @@ public class ExpedienteRequest {
 	@ApiModelProperty(value = "Parcels")
 	private List<ParcelaRequest> parcelas;
 	
-	//@ApiModelProperty(value = "Tipo persona solicitante (fisica/juridica) ")
-	//private long tipoPersonaSolicitante;
+	@ApiModelProperty(value = "Tipo persona solicitante (fisica/juridica) ")
+	private long tipoPersonaSolicitante;
 	
-	//@ApiModelProperty(value = "ID persona")
-	//private long idPersonaSolicitante;
+	@ApiModelProperty(value = "ID persona")
+	private long idPersonaSolicitante;
 	
 }

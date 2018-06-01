@@ -51,8 +51,7 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 	
 	@Override
 	public List<Expediente> findAll(ExpedienteFilter filter){
-		//TODO implement here the filter
-		return expedienteRepository.findAll();
+		return expedienteRepository.findAll(filter.getSpecifications());
 	}
 	
 	@Override

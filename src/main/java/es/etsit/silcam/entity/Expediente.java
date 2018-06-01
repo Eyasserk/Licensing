@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -40,6 +41,12 @@ public class Expediente {
 	@Column(name="fechaInicio", nullable=false)
 	private Date fechaInicio;
 	
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoPersona.class)
+	private TipoPersona tipoSolicitante;
+	
+	@Column(name="idSolicitante", nullable=false)
+	private long idSolicitante;
+	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=EstadoSolicitud.class)
 	private EstadoSolicitud estado;
 	
@@ -47,6 +54,7 @@ public class Expediente {
 	private FaseExpediente fase;
 	
 	@ManyToMany(fetch=FetchType.EAGER, targetEntity=Mineral.class, cascade= CascadeType.ALL)
+	@JoinTable(schema="concesion")
 	private List<Mineral> minerales;
 	
 	@Transient

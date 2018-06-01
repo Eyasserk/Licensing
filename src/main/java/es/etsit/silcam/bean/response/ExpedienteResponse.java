@@ -42,4 +42,10 @@ public class ExpedienteResponse {
 	
 	@ApiModelProperty(value = "Area in HR")
 	private double area;
+	
+	@ApiModelProperty(value = "Requester Identification Number")
+	private String numeroIdentificacionSolicitante;
+	
+	@ApiModelProperty(value = "Request name / company name")
+	private String nombreSolicitante;
 }
