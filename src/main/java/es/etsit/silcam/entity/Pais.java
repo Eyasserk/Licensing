@@ -17,5 +17,5 @@ import lombok.ToString;
 public class Pais extends AbstractMasterEntity {
 	
 	@Column(name="iso",length=3, nullable=false)
-	private String iso;
+	private int iso;
 }

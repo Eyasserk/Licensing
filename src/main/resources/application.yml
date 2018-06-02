@@ -21,7 +21,7 @@ spring:
          password: silcam04
      jpa:
          hibernate:
-              ddl-auto: validate
+              ddl-auto: create
      jackson:
          serialization:
               fail-on-empty-beans: false

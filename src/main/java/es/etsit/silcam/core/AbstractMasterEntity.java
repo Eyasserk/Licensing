@@ -11,10 +11,10 @@ import lombok.Setter;
 @MappedSuperclass
 public class AbstractMasterEntity extends AbstractEntity{
 
-	@Column(name="codigo", length=10, nullable=false)
+	@Column(name="codigo", length=3, nullable=false)
 	private String codigo;
 	
-	@Column(name="nombre", length=20, nullable=false)
+	@Column(name="nombre", length=40, nullable=false)
 	private String nombre;
 	
 	@Column(name="descripcion", length=255)
