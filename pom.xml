@@ -46,20 +46,17 @@
 		<dependency>
 		  <groupId>org.postgresql</groupId>
 		  <artifactId>postgresql</artifactId>
-		  <version>9.4-1206-jdbc42</version>
-		</dependency>
+		  </dependency>
 		<!-- Mongo driver -->
 		<dependency>
 		    <groupId>org.mongodb</groupId>
 		    <artifactId>mongo-java-driver</artifactId>
-		    <version>3.4.2</version>
-		</dependency>
+		    </dependency>
 		<!-- Lombok annotations -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
-		    <version>1.16.22</version>
-		</dependency>
+		    </dependency>
 		<!-- Springfox documentation -->
 		<dependency>
 		    <groupId>io.springfox</groupId>
@@ -76,8 +73,7 @@
 		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-spatial</artifactId>
-		    <version>5.3.1.Final</version>
-		</dependency>
+		    </dependency>
 		<dependency>
 		    <groupId>com.vividsolutions</groupId>
 		    <artifactId>jts</artifactId>

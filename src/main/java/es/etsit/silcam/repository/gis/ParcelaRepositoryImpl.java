@@ -16,6 +16,7 @@ public class ParcelaRepositoryImpl implements ParcelaRepository{
 
 	private final MongoOperations mongoOperations;
 	
+	@SuppressWarnings("deprecation")
 	@Autowired
 	public ParcelaRepositoryImpl(MongoOperations mongoOperations) {
 		Assert.notNull(mongoOperations);

@@ -32,7 +32,7 @@ import lombok.ToString;
 public class Expediente {
 
 	@Id
-	@GeneratedValue( strategy=GenerationType.AUTO )
+	@GeneratedValue( strategy=GenerationType.AUTO)
 	private long id;
 	
 	@Column(name="numeroExpediente", nullable=false, length=40)

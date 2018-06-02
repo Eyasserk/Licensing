@@ -1,7 +1,10 @@
 package es.etsit.silcam.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import es.etsit.silcam.entity.Expediente;
@@ -13,24 +16,25 @@ public interface ExpedienteRepository extends JpaRepository<Expediente, Long>, J
 	
 	public Expediente findByNumeroExpedienteContaining(String numeroExpediente);
 	
-	/**
-	public List<Expediente> findByFaseexpediente_Id(long faseExpedienteId);
+	@Query(nativeQuery=true, value="select * from concesion.expediente where fase_id = ?1")
+	public List<Expediente> findByFaseExpedienteId(long faseExpedienteId);
 	
-	public List<Expediente> findByEstadosolicitud_Id(long estadoSolicitudId);
+	@Query(nativeQuery=true, value="select * from concesion.expediente where estado_id = ?1")
+	public List<Expediente> findByEstadosolicitudId(long estadoSolicitudId);
 	
 	public List<Expediente> findByIdSolicitante(long idSolicitante);
 	
-	public List<Expediente> findByMinerales_Id(long mineralId);
+	@Query(nativeQuery=true, value="select * from concesion.expediente where id in (select expediente_id from concesion.expediente_minerales where minerales_id = ?1)")
+	public List<Expediente> findByMineralId(long mineralId);
 	
-	@Query("select e from expediente e where e.id in (select e_m.expediente_id from expediente_minerales e_m where e_m.minerales_id = ?1)")
+	@Query(nativeQuery=true, value="select * from concesion.expediente where id in (select distinct expediente_id from concesion.expediente_minerales where minerales_id in (select id from concesion.mineral where grupo_id = ?1))")
 	public List<Expediente> buscarPorGrupoMineral(long grupoMineralId);
 	
-	@Query("select e from expediente e where e.fase_id = ?2 and e.id in (select e_m.expediente_id from expediente_minerales e_m where e_m.minerales_id = ?1)")
+	@Query(nativeQuery=true, value="select * from concesion.expediente where fase_id = ?2 and id in (select expediente_id from concesion.expediente_minerales where minerales_id = ?1)")
 	public List<Expediente> buscarOirGrupoMineralYFase(long grupoMineralId, long faseExpedienteId);
 	
-	@Query("select e from expediente e where e.estado_id = ?2 and e.id in (select e_m.expediente_id from expediente_minerales e_m where e_m.minerales_id = ?1)")
+	@Query(nativeQuery=true, value="select * from concesion.expediente where estado_id = ?2 and id in (select expediente_id from concesion.expediente_minerales where minerales_id = ?1)")
 	public List<Expediente> buscarPorGrupoMineralYEstado(long grupoMineralId, long estadoSolicitudId);
-	*/
 	
 	
 }

@@ -105,6 +105,7 @@ public class SilcamExceptionHandler {
 		return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
 	}
 
+	/**
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<ErrorResponse> handleException(RuntimeException e) {
@@ -115,6 +116,7 @@ public class SilcamExceptionHandler {
 
 		return new ResponseEntity<ErrorResponse>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	*/
 
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)

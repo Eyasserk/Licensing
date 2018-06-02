@@ -2,7 +2,6 @@ package es.etsit.silcam.web;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,7 +32,6 @@ import es.etsit.silcam.entity.PersonaFisica;
 import es.etsit.silcam.entity.PersonaJuridica;
 import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.entity.gis.Parcela;
-import es.etsit.silcam.filter.ExpedienteFilter;
 import es.etsit.silcam.service.ExpedienteService;
 import es.etsit.silcam.service.MineralService;
 import es.etsit.silcam.service.PersonaFisicaService;
@@ -97,16 +95,7 @@ public class ExpedienteRestController {
 			) {
 		log.info("Request find expedientes");
 		
-		ExpedienteFilter filter = new ExpedienteFilter();
-		filter.setId(2L);
-		filter.setNumeroExpediente("201806");
-		filter.setIdSolicitante(1L);
-		filter.setTipoSolicitanteId(1L);
-		filter.setEstadoSolicitudId(1L);
-		filter.setFaseExpedienteId(1L);
-		filter.setFechaInicioEnd(new Date());
-		
-		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(filter)), HttpStatus.OK);
+		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(null)), HttpStatus.OK);
 		
 	}
 	
@@ -144,12 +133,12 @@ public class ExpedienteRestController {
 			response.setId(expediente.getId());
 			response.setNumeroExpediente(expediente.getNumeroExpediente());
 			if(expediente.getTipoSolicitante().getId() == 1) {
-				//Persona Física
+				//Persona Fisica
 				PersonaFisica persona = personaFisicaService.findById(expediente.getIdSolicitante());
 				response.setNombreSolicitante(persona.getNombre()+" "+persona.getApellido1()+" "+(persona.getApellido2() == null ? "": persona.getApellido2()));
 				response.setNumeroIdentificacionSolicitante(persona.getNumeroIdentificacion());
 			}else {
-				//Persona Jurídica
+				//Persona Juridica
 				PersonaJuridica persona = personaJuridicaService.findById(expediente.getIdSolicitante());
 				response.setNombreSolicitante(persona.getRazonSocial());
 				response.setNumeroIdentificacionSolicitante(persona.getNumeroIdentificacion());

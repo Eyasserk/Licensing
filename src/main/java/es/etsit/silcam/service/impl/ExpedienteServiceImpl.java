@@ -51,7 +51,13 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 	
 	@Override
 	public List<Expediente> findAll(ExpedienteFilter filter){
-		return expedienteRepository.findAll(filter.getSpecifications());
+		if(filter == null) {
+			return expedienteRepository.findAll();
+		}else{
+			return expedienteRepository.findAll(filter.getSpecifications(),
+												filter.getPageRequest())
+												.getContent();
+		}
 	}
 	
 	@Override
