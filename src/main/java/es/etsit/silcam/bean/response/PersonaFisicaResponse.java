@@ -1,7 +1,6 @@
 package es.etsit.silcam.bean.response;
 
-import com.wordnik.swagger.annotations.ApiModelProperty;
-
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 

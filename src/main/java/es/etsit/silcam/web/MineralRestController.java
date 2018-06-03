@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wordnik.swagger.annotations.Api;
-
 import es.etsit.silcam.bean.response.ErrorResponse;
 import es.etsit.silcam.bean.response.MineralResponse;
 import es.etsit.silcam.entity.Mineral;
 import es.etsit.silcam.service.MineralService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

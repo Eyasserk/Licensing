@@ -2,9 +2,8 @@ package es.etsit.silcam.bean.response;
 
 import java.util.List;
 
-import com.wordnik.swagger.annotations.ApiModelProperty;
-
 import es.etsit.silcam.util.Coordenada;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 

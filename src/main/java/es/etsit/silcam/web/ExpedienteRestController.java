@@ -17,11 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
-
 import es.etsit.silcam.bean.request.ExpedienteRequest;
 import es.etsit.silcam.bean.request.ParcelaRequest;
 import es.etsit.silcam.bean.response.ErrorResponse;
@@ -39,6 +34,10 @@ import es.etsit.silcam.service.PersonaJuridicaService;
 import es.etsit.silcam.service.ProvinciaService;
 import es.etsit.silcam.service.TipoExpedienteService;
 import es.etsit.silcam.service.TipoSolicitudService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Api(value = "Silcam")

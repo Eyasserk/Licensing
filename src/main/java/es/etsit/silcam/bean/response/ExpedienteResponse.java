@@ -2,8 +2,6 @@ package es.etsit.silcam.bean.response;
 
 import java.util.List;
 
-import com.wordnik.swagger.annotations.ApiModelProperty;
-
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.Mineral;
@@ -11,6 +9,7 @@ import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoExpediente;
 import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.entity.gis.Parcela;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 

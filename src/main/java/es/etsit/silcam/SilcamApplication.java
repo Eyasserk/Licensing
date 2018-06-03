@@ -3,6 +3,8 @@ package es.etsit.silcam;
 import static com.google.common.collect.Lists.newArrayList;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +22,7 @@ import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.schema.WildcardType;
 import springfox.documentation.service.ApiInfo;
-//import springfox.documentation.service.Contact;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -53,14 +55,18 @@ public class SilcamApplication {
 				.globalResponseMessage(RequestMethod.GET,
 						newArrayList(new ResponseMessageBuilder().code(500).message("500 message")
 								.responseModel(new ModelRef("Error")).build()))
-				//.enableUrlTemplating(false)
+				.enableUrlTemplating(false)
 				.apiInfo(apiInfo());
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("Silcam Documentation", "Silcam",
-				appVersion, "urn:tos", null, "Apache 2.0",
-				"http://www.apache.org/licenses/LICENSE-2.0");
+		String title = "Silcam Rest";
+		String description = "Silcam Backend Rest API";
+		String termsOfServiceUrl = "urn:tos";
+		Contact contact = new Contact("Yasser Kantour","https://github.com/yasskant","ykantour20@gmail.com");
+		String licence = "Apache 2.0";
+		String url = "http://www.apache.org/licenses/LICENSE-2.0";
+		return new ApiInfo(title, description, appVersion, termsOfServiceUrl, contact, licence, url, Collections.emptyList());
 	}
 	
 }
