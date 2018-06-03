@@ -3,11 +3,10 @@ package es.etsit.silcam.service;
 import java.util.List;
 
 import es.etsit.silcam.entity.Pais;
-import es.etsit.silcam.filter.PaisFilter;
 
 public interface PaisService {
 	
-	public List<Pais> findAll(PaisFilter filter);
+	public List<Pais> findAll();
 	
 	public Pais findById(long id);
 	

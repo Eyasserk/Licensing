@@ -12,6 +12,8 @@ import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.PersonaFisica;
 import es.etsit.silcam.entity.PersonaJuridica;
+import es.etsit.silcam.entity.TipoExpediente;
+import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.exception.BadRequestException;
 import es.etsit.silcam.filter.model.Expediente_;
 import lombok.Getter;
@@ -25,8 +27,14 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 
 	private Long id;
 	private String numeroExpediente;
-	private Date fechaInicioStart;
-	private Date fechaInicioEnd;
+	private Date fechaInicioExpedienteStart;
+	private Date fechaInicioExpedienteEnd;
+	private Date fechaInicioActividadStart;
+	private Date fechaInicioActividadEnd;
+	private Date fechaFinActividadStart;
+	private Date fechaFinActividadEnd;
+	private Long tipoExpedienteId;
+	private Long tipoSolicitudId;
 	private Long faseExpedienteId;
 	private Long estadoSolicitudId;
 	private Long idSolicitante;
@@ -39,9 +47,13 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	public Specification<Expediente> getSpecifications() {
 		Specification<Expediente> specById = null;
 		Specification<Expediente> specByNumeroExpediente = null;
-		Specification<Expediente> specByFechaInicio = null;
+		Specification<Expediente> specByFechaInicioExpediente = null;
+		Specification<Expediente> specByFechaInicioActividad = null;
+		Specification<Expediente> specByFechaFinActividad = null;
 		Specification<Expediente> specByFase = null;
 		Specification<Expediente> specByEstado = null;
+		Specification<Expediente> specByTipoExpediente = null;
+		Specification<Expediente> specByTipoSolicitud = null;
 		Specification<Expediente> specByIdSolicitante = null;
 		Specification<Expediente> specByMineral = null;
 		Specification<Expediente> specByGrupoMineral = null;
@@ -54,14 +66,26 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		if(numeroExpediente != null && !numeroExpediente.isEmpty()) {
 			specByNumeroExpediente = getSpecificationByNumeroExpediente();
 		}
-		if(fechaInicioStart != null || fechaInicioEnd != null) {
-			specByFechaInicio = getSpecificationByFechaInicio();
+		if(fechaInicioExpedienteStart != null || fechaInicioExpedienteEnd != null) {
+			specByFechaInicioExpediente = getSpecificationByFechaInicioExpediente();
+		}
+		if(fechaInicioActividadStart != null || fechaInicioActividadEnd != null) {
+			specByFechaInicioActividad = getSpecificationByFechaInicioActividad();
+		}
+		if(fechaFinActividadStart != null || fechaFinActividadEnd != null) {
+			specByFechaFinActividad = getSpecificationByFechaFinActividad();
 		}
 		if(estadoSolicitudId != null) {
 			specByEstado = getSpecificationByEstado();
 		}
 		if(faseExpedienteId != null) {
 			specByFase = getSpecificationByFase();
+		}
+		if(tipoExpedienteId != null) {
+			specByTipoExpediente = getSpecificationByTipoExpediente();
+		}
+		if(tipoSolicitanteId != null) {
+			specByTipoSolicitud = getSpecificationByTipoSolicitud();
 		}
 		if(idSolicitante != null) {
 			if(tipoSolicitanteId == null) {
@@ -83,9 +107,13 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		}
 		return Specification.where(specById)
 				.and(specByNumeroExpediente)
-				.and(specByFechaInicio)
+				.and(specByFechaInicioExpediente)
+				.and(specByFechaInicioActividad)
+				.and(specByFechaFinActividad)
 				.and(specByEstado)
 				.and(specByFase)
+				.and(specByTipoExpediente)
+				.and(specByTipoSolicitud)
 				.and(specByIdSolicitante)
 				.and(specByMineral)
 				.and(specByGrupoMineral)
@@ -104,18 +132,52 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 				LIKE + numeroExpediente.toLowerCase() + LIKE);
 	}
 	
-	private Specification<Expediente> getSpecificationByFechaInicio(){
+	private Specification<Expediente> getSpecificationByFechaInicioExpediente(){
 		return (root, query, cb) -> { 
 			Predicate p = null;
-			if((fechaInicioStart!=null) && (fechaInicioEnd!=null)){
-				p = cb.between(root.<Date>get(Expediente_.fechaInicio ), fechaInicioStart,fechaInicioEnd);
+			if((fechaInicioExpedienteStart!=null) && (fechaInicioExpedienteEnd!=null)){
+				p = cb.between(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteStart,fechaInicioExpedienteEnd);
 			}
-			if((fechaInicioStart!=null) && (fechaInicioEnd==null))
+			if((fechaInicioExpedienteStart!=null) && (fechaInicioExpedienteEnd==null))
 			{
-				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaInicio ), fechaInicioStart);
+				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteStart);
 			}
-			if((fechaInicioStart==null) && (fechaInicioEnd!=null)){
-				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaInicio ), fechaInicioEnd);
+			if((fechaInicioExpedienteStart==null) && (fechaInicioExpedienteEnd!=null)){
+				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteEnd);
+			}  
+			return p; 
+		}; 
+	}
+	
+	private Specification<Expediente> getSpecificationByFechaInicioActividad(){
+		return (root, query, cb) -> { 
+			Predicate p = null;
+			if((fechaInicioActividadStart!=null) && (fechaInicioActividadEnd!=null)){
+				p = cb.between(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadStart,fechaInicioActividadEnd);
+			}
+			if((fechaInicioActividadStart!=null) && (fechaInicioActividadEnd==null))
+			{
+				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadStart);
+			}
+			if((fechaInicioActividadStart==null) && (fechaInicioActividadEnd!=null)){
+				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadEnd);
+			}  
+			return p; 
+		}; 
+	}
+	
+	private Specification<Expediente> getSpecificationByFechaFinActividad(){
+		return (root, query, cb) -> { 
+			Predicate p = null;
+			if((fechaFinActividadStart!=null) && (fechaFinActividadEnd!=null)){
+				p = cb.between(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadStart,fechaFinActividadEnd);
+			}
+			if((fechaFinActividadStart!=null) && (fechaFinActividadEnd==null))
+			{
+				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadStart);
+			}
+			if((fechaFinActividadStart==null) && (fechaFinActividadEnd!=null)){
+				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadEnd);
 			}  
 			return p; 
 		}; 
@@ -134,6 +196,22 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 			EstadoSolicitud estado = new EstadoSolicitud();
 			estado.setId(estadoSolicitudId);
 			return cb.equal(root.<EstadoSolicitud>get(Expediente_.estado), estado);
+		};
+	}
+	
+	private Specification<Expediente> getSpecificationByTipoExpediente(){
+		return (root, query, cb) -> {
+			TipoExpediente tipoExpediente = new TipoExpediente();
+			tipoExpediente.setId(tipoExpedienteId);
+			return cb.equal(root.<TipoExpediente>get(Expediente_.tipoExpediente), tipoExpediente);
+		};
+	}
+	
+	private Specification<Expediente> getSpecificationByTipoSolicitud(){
+		return (root, query, cb) -> {
+			TipoSolicitud tipoSolicitud = new TipoSolicitud();
+			tipoSolicitud.setId(tipoSolicitudId);
+			return cb.equal(root.<TipoSolicitud>get(Expediente_.tipoSolicitud), tipoSolicitud);
 		};
 	}
 	
@@ -184,10 +262,16 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	public void reset() {
 		this.id = null;
 		this.numeroExpediente = null;
-		this.fechaInicioStart = null;
-		this.fechaInicioEnd = null;
+		this.fechaInicioExpedienteStart = null;
+		this.fechaInicioExpedienteEnd = null;
+		this.fechaInicioActividadStart = null;
+		this.fechaInicioActividadEnd = null;
+		this.fechaFinActividadStart = null;
+		this.fechaFinActividadEnd = null;
 		this.faseExpedienteId = null;
 		this.estadoSolicitudId = null;
+		this.tipoExpedienteId = null;
+		this.tipoSolicitudId = null;
 		this.idSolicitante = null;
 		this.mineralId = null;
 		this.grupoMineralId = null;

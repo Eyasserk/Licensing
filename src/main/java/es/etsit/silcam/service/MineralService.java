@@ -3,11 +3,12 @@ package es.etsit.silcam.service;
 import java.util.List;
 
 import es.etsit.silcam.entity.Mineral;
-import es.etsit.silcam.filter.MineralFilter;
 
 public interface MineralService{
 
-	public List<Mineral> findAll(MineralFilter filter);
+	public List<Mineral> findAll();
+	
+	public List<Mineral> findByGrupoId(long grupoId);
 	
 	public Mineral findById(long id);
 	

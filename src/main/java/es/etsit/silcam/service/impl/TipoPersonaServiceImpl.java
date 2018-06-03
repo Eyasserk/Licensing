@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.TipoPersonaFilter;
 import es.etsit.silcam.repository.TipoPersonaRepository;
 import es.etsit.silcam.service.TipoPersonaService;
 
@@ -23,8 +22,7 @@ public class TipoPersonaServiceImpl implements TipoPersonaService{
 	}
 	
 	@Override
-	public List<TipoPersona> findAll(TipoPersonaFilter filter) {
-		// TODO implement here the filter
+	public List<TipoPersona> findAll() {
 		return tipoPersonaRepository.findAll();
 	}
 

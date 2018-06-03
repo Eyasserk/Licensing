@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.EstadoSolicitudFilter;
 import es.etsit.silcam.repository.EstadoSolicitudRepository;
 import es.etsit.silcam.service.EstadoSolicitudService;
 
@@ -23,8 +22,7 @@ public class EstadoSolicitudServiceImpl implements EstadoSolicitudService{
 	}
 	
 	@Override
-	public List<EstadoSolicitud> findAll(EstadoSolicitudFilter filter) {
-		// TODO implement here the filter
+	public List<EstadoSolicitud> findAll() {
 		return estadoSolicitudRepository.findAll();
 	}
 

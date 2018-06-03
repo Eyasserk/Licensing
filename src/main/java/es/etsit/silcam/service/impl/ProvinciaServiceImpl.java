@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.ProvinciaFilter;
 import es.etsit.silcam.repository.ProvinciaRepository;
 import es.etsit.silcam.service.ProvinciaService;
 
@@ -23,8 +22,7 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 	}
 	
 	@Override
-	public List<Provincia> findAll(ProvinciaFilter filter) {
-		// TODO implement here the filter
+	public List<Provincia> findAll() {
 		return provinciaRepository.findAll();
 	}
 

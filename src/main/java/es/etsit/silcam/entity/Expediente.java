@@ -16,8 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import es.etsit.silcam.entity.gis.Parcela;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +26,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Expediente {
 
 	@Id
@@ -38,8 +35,14 @@ public class Expediente {
 	@Column(name="numeroExpediente", nullable=false, length=40)
 	private String numeroExpediente;
 	
-	@Column(name="fechaInicio", nullable=false)
-	private Date fechaInicio;
+	@Column(name="fechaInicioExpediente", nullable=false)
+	private Date fechaInicioExpediente;
+	
+	@Column(name="fechaInicioActividad", nullable=false)
+	private Date fechaInicioActividad;
+	
+	@Column(name="fechaFinActividad", nullable=false)
+	private Date fechaFinActividad;
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoPersona.class)
 	private TipoPersona tipoSolicitante;
@@ -52,6 +55,12 @@ public class Expediente {
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=FaseExpediente.class)
 	private FaseExpediente fase;
+	
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoExpediente.class)
+	private TipoExpediente tipoExpediente;
+	
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoSolicitud.class)
+	private TipoSolicitud tipoSolicitud;
 	
 	@ManyToMany(fetch=FetchType.EAGER, targetEntity=Mineral.class, cascade= CascadeType.ALL)
 	@JoinTable(schema="concesion")

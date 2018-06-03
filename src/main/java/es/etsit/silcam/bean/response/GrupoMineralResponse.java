@@ -12,6 +12,9 @@ public class GrupoMineralResponse {
 	@ApiModelProperty(value = "Unique ID")
 	private long id;
 	
+	@ApiModelProperty(value = "Code")
+	private String codigo;
+	
 	@ApiModelProperty(value = "Name")
 	private String nombre;
 	

@@ -8,6 +8,8 @@ import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.Mineral;
 import es.etsit.silcam.entity.Provincia;
+import es.etsit.silcam.entity.TipoExpediente;
+import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.entity.gis.Parcela;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +25,13 @@ public class ExpedienteResponse {
 	private String numeroExpediente;
 	
 	@ApiModelProperty(value = "Initiation Date")
-	private String fechaInicio;
+	private String fechaInicioExpediente;
+	
+	@ApiModelProperty(value = "Activity Initiation Date")
+	private String fechaInicioActividad;
+	
+	@ApiModelProperty(value = "Activity End Date")
+	private String fechaFinActividad;
 	
 	@ApiModelProperty(value = "State")
 	private EstadoSolicitud estado;
@@ -48,4 +56,11 @@ public class ExpedienteResponse {
 	
 	@ApiModelProperty(value = "Request name / company name")
 	private String nombreSolicitante;
+	
+	@ApiModelProperty(value = "Request Type")
+	private TipoSolicitud tipoSolicitud;
+	
+	@ApiModelProperty(value = "Case Type")
+	private TipoExpediente tipoExpediente;
+	
 }

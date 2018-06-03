@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.GrupoMineral;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.GrupoMineralFilter;
 import es.etsit.silcam.repository.GrupoMineralRepository;
 import es.etsit.silcam.service.GrupoMineralService;
 
@@ -23,8 +22,7 @@ public class GrupoMineralServiceImpl implements GrupoMineralService{
 	}
 	
 	@Override
-	public List<GrupoMineral> findAll(GrupoMineralFilter filter) {
-		// TODO implement here the filter
+	public List<GrupoMineral> findAll() {
 		return grupoMineralRepository.findAll();
 	}
 

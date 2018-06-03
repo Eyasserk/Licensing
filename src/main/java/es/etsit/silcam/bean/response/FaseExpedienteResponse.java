@@ -12,6 +12,9 @@ public class FaseExpedienteResponse {
 	@ApiModelProperty(value = "Unique ID")
 	private long id;
 	
+	@ApiModelProperty(value = "Code")
+	private String codigo;
+	
 	@ApiModelProperty(value = "Name")
 	private String nombre;
 	

@@ -4,11 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import es.etsit.silcam.core.AbstractEntity;
+import es.etsit.silcam.core.AbstractPerson;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PersonaFisica extends AbstractEntity{
+public class PersonaFisica extends AbstractPerson{
 	
 	@Column(name="nombre", length=40, nullable=false)
 	private String nombre;
@@ -29,28 +27,7 @@ public class PersonaFisica extends AbstractEntity{
 	@Column(name="apellido2", length=40)
 	private String apellido2;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoIdentificacion.class)
-	private TipoIdentificacion tipoIdentificacion;
-	
-	@Column(name="numeroIdentificacion", length=10, nullable=false, unique=true)
-	private String numeroIdentificacion;
-	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Pais.class)
-	private Pais nacionalidad;
-	
 	@Column(name="fechaNacimiento", nullable=false)
 	private Date fechaNacimiento;
-	
-	@Column(name="direccionResidencia", length=255, nullable=false)
-	private String direccionResidencia;
-	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Provincia.class)
-	private Provincia provinciaResidencia;
-	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Pais.class)
-	private Pais paisResidencia;
-	
-	@Column(name="activo", nullable=false)
-	private boolean activo;
 	
 }

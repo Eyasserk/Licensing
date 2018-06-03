@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.TipoIdentificacion;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.TipoIdentificacionFilter;
 import es.etsit.silcam.repository.TipoIdentificacionRepository;
 import es.etsit.silcam.service.TipoIdentificacionService;
 
@@ -23,8 +22,7 @@ public class TipoIdentificacionServiceImpl implements TipoIdentificacionService{
 	}
 	
 	@Override
-	public List<TipoIdentificacion> findAll(TipoIdentificacionFilter filter) {
-		// TODO implement here the filter
+	public List<TipoIdentificacion> findAll() {
 		return tipoIdentificacionRepository.findAll();
 	}
 

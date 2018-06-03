@@ -3,11 +3,10 @@ package es.etsit.silcam.service;
 import java.util.List;
 
 import es.etsit.silcam.entity.TipoPersona;
-import es.etsit.silcam.filter.TipoPersonaFilter;
 
 public interface TipoPersonaService {
 
-	public List<TipoPersona> findAll(TipoPersonaFilter filter);
+	public List<TipoPersona> findAll();
 	
 	public TipoPersona findById(long id);
 	

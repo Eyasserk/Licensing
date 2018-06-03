@@ -3,11 +3,10 @@ package es.etsit.silcam.service;
 import java.util.List;
 
 import es.etsit.silcam.entity.Sexo;
-import es.etsit.silcam.filter.SexoFilter;
 
 public interface SexoService {
 	
-	public List<Sexo> findAll(SexoFilter filter);
+	public List<Sexo> findAll();
 	
 	public Sexo findById(long id);
 	

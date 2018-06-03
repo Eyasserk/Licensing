@@ -3,11 +3,10 @@ package es.etsit.silcam.service;
 import java.util.List;
 
 import es.etsit.silcam.entity.EstadoSolicitud;
-import es.etsit.silcam.filter.EstadoSolicitudFilter;
 
 public interface EstadoSolicitudService {
 
-	public List<EstadoSolicitud> findAll(EstadoSolicitudFilter filter);
+	public List<EstadoSolicitud> findAll();
 	
 	public EstadoSolicitud findById(long id);
 	

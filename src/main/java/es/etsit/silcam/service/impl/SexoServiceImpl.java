@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.Sexo;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.SexoFilter;
 import es.etsit.silcam.repository.SexoRepository;
 import es.etsit.silcam.service.SexoService;
 
@@ -23,8 +22,7 @@ public class SexoServiceImpl implements SexoService{
 	}
 	
 	@Override
-	public List<Sexo> findAll(SexoFilter filter) {
-		// TODO implement here the filter
+	public List<Sexo> findAll() {
 		return sexoRepository.findAll();
 	}
 

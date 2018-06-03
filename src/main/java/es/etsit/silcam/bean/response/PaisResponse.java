@@ -13,10 +13,10 @@ public class PaisResponse {
 	private long id;
 	
 	@ApiModelProperty(value = "Country code")
-	private int codigo;
+	private String codigo;
 	
 	@ApiModelProperty(value = "ISO")
-	private String iso;
+	private int iso;
 	
 	@ApiModelProperty(value = "Name")
 	private String nombre;

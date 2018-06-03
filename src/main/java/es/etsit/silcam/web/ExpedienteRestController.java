@@ -37,6 +37,8 @@ import es.etsit.silcam.service.MineralService;
 import es.etsit.silcam.service.PersonaFisicaService;
 import es.etsit.silcam.service.PersonaJuridicaService;
 import es.etsit.silcam.service.ProvinciaService;
+import es.etsit.silcam.service.TipoExpedienteService;
+import es.etsit.silcam.service.TipoSolicitudService;
 import lombok.extern.slf4j.Slf4j;
 
 @Api(value = "Silcam")
@@ -51,6 +53,8 @@ public class ExpedienteRestController {
 	private ProvinciaService provinciaService;
 	private PersonaFisicaService personaFisicaService;
 	private PersonaJuridicaService personaJuridicaService;
+	private TipoSolicitudService tipoSolicitudService;
+	private TipoExpedienteService tipoExpedienteService;
 	
 	@Autowired
 	public void setExpedienteService(ExpedienteService expedienteService) {
@@ -75,6 +79,16 @@ public class ExpedienteRestController {
 	@Autowired
 	public void setPersonaJuridicaService(PersonaJuridicaService personaJuridicaService) {
 		this.personaJuridicaService = personaJuridicaService;
+	}
+	
+	@Autowired
+	public void setTipoExpedienteService(TipoExpedienteService tipoExpedienteService) {
+		this.tipoExpedienteService = tipoExpedienteService;
+	}
+	
+	@Autowired
+	public void setTipoSolicitudService(TipoSolicitudService tipoSolicitudService) {
+		this.tipoSolicitudService = tipoSolicitudService;
 	}
 	
 	
@@ -129,7 +143,9 @@ public class ExpedienteRestController {
 			response.setProvincias(expediente.getProvincias());
 			response.setEstado(expediente.getEstado());
 			response.setFase(expediente.getFase());
-			response.setFechaInicio(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicio()));
+			response.setFechaInicioActividad(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicioExpediente()));
+			response.setFechaInicioActividad(new SimpleDateFormat("dd/MM/yyyy").format(expediente.getFechaInicioActividad()));
+			response.setFechaFinActividad(new SimpleDateFormat("dd/MM/yyyy").format(expediente.getFechaFinActividad()));
 			response.setId(expediente.getId());
 			response.setNumeroExpediente(expediente.getNumeroExpediente());
 			if(expediente.getTipoSolicitante().getId() == 1) {
@@ -145,6 +161,8 @@ public class ExpedienteRestController {
 			}
 			response.setParcelas(expediente.getParcelas());
 			response.setMinerales(expediente.getMinerales());
+			response.setTipoExpediente(expediente.getTipoExpediente());
+			response.setTipoSolicitud(expediente.getTipoSolicitud());
 		}
 		return response;
 	}
@@ -177,6 +195,11 @@ public class ExpedienteRestController {
 				minerales.add(mineralService.findById(idMineral));
 			}
 		}
+		//Tipo Expediente
+		expediente.setTipoExpediente(tipoExpedienteService.findById(request.getIdTipoExpediente()));
+		//Tipo Solicitud
+		expediente.setTipoSolicitud(tipoSolicitudService.findById(request.getIdTipoSolicitud()));
+		
 		expediente.setParcelas(parcelas);
 		expediente.setMinerales(minerales);
 		expediente.setIdSolicitante(request.getIdPersonaSolicitante());

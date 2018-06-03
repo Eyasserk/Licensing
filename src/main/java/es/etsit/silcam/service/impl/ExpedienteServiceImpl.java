@@ -82,7 +82,7 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 	@Override
 	public Expediente create(Expediente expediente) {
 		//Fecha inicio actual
-		expediente.setFechaInicio(new Date());
+		expediente.setFechaInicioExpediente(new Date());
 		
 		//Asignar estado y fase iniciales
 		FaseExpediente fase = faseExpedienteRepository.getOne(1L);

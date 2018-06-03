@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.FaseExpedienteFilter;
 import es.etsit.silcam.repository.FaseExpedienteRepository;
 import es.etsit.silcam.service.FaseExpedienteService;
 
@@ -22,8 +21,7 @@ public class FaseExpedienteServiceImpl implements FaseExpedienteService{
 	}
 	
 	@Override
-	public List<FaseExpediente> findAll(FaseExpedienteFilter filter) {
-		// TODO implement here the filter
+	public List<FaseExpediente> findAll() {
 		return faseExpedienteRepository.findAll();
 	}
 

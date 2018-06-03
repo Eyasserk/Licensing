@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import es.etsit.silcam.entity.Pais;
 import es.etsit.silcam.exception.NotFoundException;
-import es.etsit.silcam.filter.PaisFilter;
 import es.etsit.silcam.repository.PaisRepository;
 import es.etsit.silcam.service.PaisService;
 
@@ -23,8 +22,7 @@ public class PaisServiceImpl implements PaisService{
 	}
 	
 	@Override
-	public List<Pais> findAll(PaisFilter filter) {
-		// TODO implement here the filter
+	public List<Pais> findAll() {
 		return paisRepository.findAll();
 	}
 

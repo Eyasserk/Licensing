@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SexoResponse {
+public class TipoSolicitudResponse {
 
 	@ApiModelProperty(value = "Unique ID")
 	private long id;
@@ -17,4 +17,7 @@ public class SexoResponse {
 	
 	@ApiModelProperty(value = "Name")
 	private String nombre;
+	
+	@ApiModelProperty(value = "Description")
+	private String descripcion;
 }

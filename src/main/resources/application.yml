@@ -10,6 +10,8 @@ springfox:
             v2:
                 path: /swagger.json
  
+server:
+     port: 8090
 
 spring:
      data:
