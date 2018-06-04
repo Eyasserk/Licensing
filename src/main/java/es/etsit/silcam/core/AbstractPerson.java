@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class AbstractPerson extends AbstractMasterEntity{
+public class AbstractPerson extends AbstractEntity{
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoIdentificacion.class)
 	private TipoIdentificacion tipoIdentificacion;

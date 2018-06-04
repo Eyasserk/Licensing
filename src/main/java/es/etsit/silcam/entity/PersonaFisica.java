@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import es.etsit.silcam.core.AbstractPerson;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PersonaFisica extends AbstractPerson{
 	
 	@Column(name="nombre", length=40, nullable=false)

@@ -20,8 +20,10 @@ import es.etsit.silcam.repository.ExpedienteRepository;
 import es.etsit.silcam.repository.FaseExpedienteRepository;
 import es.etsit.silcam.repository.gis.ParcelaRepository;
 import es.etsit.silcam.service.ExpedienteService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service("expedienteService")
+@Slf4j
 public class ExpedienteServiceImpl implements ExpedienteService{
 
 	private ExpedienteRepository expedienteRepository;
@@ -102,8 +104,10 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 		}
 		expediente.setArea(area);
 		
+		log.info("Expediente para guardar: {}",expediente);
+		
 		//Guardarlo en BBDD
-		Expediente saved = expedienteRepository.saveAndFlush(expediente);
+		Expediente saved = expedienteRepository.save(expediente);
 		
 		//Guardar las parcelas
 		if(expediente.getParcelas() != null) {
@@ -118,7 +122,7 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 	
 	@Override
 	public Expediente update(Expediente expediente) {
-		return expedienteRepository.saveAndFlush(expediente);
+		return expedienteRepository.save(expediente);
 	}
 	
 	@Override
