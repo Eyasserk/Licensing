@@ -8,8 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import es.etsit.silcam.core.AbstractPerson;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +18,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PersonaJuridica extends AbstractPerson{
 	
 	@Column(name="razonSocial", length=100, nullable=false, unique=true)

@@ -3,13 +3,13 @@ package es.etsit.silcam.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -44,40 +44,40 @@ public class Expediente {
 	@Column(name="fechaFinActividad", nullable=false)
 	private Date fechaFinActividad;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoPersona.class)
-	private TipoPersona tipoSolicitante;
-	
 	@Column(name="idSolicitante", nullable=false)
 	private long idSolicitante;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=EstadoSolicitud.class)
+	@Column(name="area", nullable=false)
+	private double area;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="tipo_persona_id")
+	private TipoPersona tipoSolicitante;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="estado_solicitud_id")
 	private EstadoSolicitud estado;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=FaseExpediente.class)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="fase_expediente_id")
 	private FaseExpediente fase;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoExpediente.class)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="tipo_expediente_id")
 	private TipoExpediente tipoExpediente;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoSolicitud.class)
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="tipo_solicitud_id")
 	private TipoSolicitud tipoSolicitud;
 	
-	@ManyToMany(fetch=FetchType.EAGER, targetEntity=Mineral.class, cascade= CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(schema="concesion")
 	private List<Mineral> minerales;
 	
 	@Transient
 	private List<Parcela> parcelas;
 	
-	/**
-	 * Provincias
-	 */
 	@Transient
 	private List<Provincia> provincias;
-	
-	/**
-	 * area en hectareas
-	 */
-	@Column(name="area", nullable=false)
-	private double area;
+
 }
