@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Api(value = "Silcam")
 @RestController
+@CrossOrigin(origins= {"${silcam.portal.ciudadano.url}","${silcam.portal.bpm.url}"})
 @RequestMapping(path = "/api/1")
 @Slf4j
 public class ExpedienteRestController {
@@ -142,7 +144,7 @@ public class ExpedienteRestController {
 			response.setProvincias(expediente.getProvincias());
 			response.setEstado(expediente.getEstado());
 			response.setFase(expediente.getFase());
-			response.setFechaInicioActividad(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicioExpediente()));
+			response.setFechaInicioExpediente(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicioExpediente()));
 			response.setFechaInicioActividad(new SimpleDateFormat("dd/MM/yyyy").format(expediente.getFechaInicioActividad()));
 			response.setFechaFinActividad(new SimpleDateFormat("dd/MM/yyyy").format(expediente.getFechaFinActividad()));
 			response.setId(expediente.getId());
@@ -163,6 +165,7 @@ public class ExpedienteRestController {
 			response.setTipoExpediente(expediente.getTipoExpediente());
 			response.setTipoSolicitud(expediente.getTipoSolicitud());
 		}
+		log.info("Response: {}",response);
 		return response;
 	}
 	
@@ -205,6 +208,8 @@ public class ExpedienteRestController {
 		TipoPersona tipoPersona = new TipoPersona();
 		tipoPersona.setId(request.getTipoPersonaSolicitante());
 		expediente.setTipoSolicitante(tipoPersona);
+		expediente.setFechaFinActividad(request.getActivityEndDate());
+		expediente.setFechaInicioActividad(request.getActivityStartDate());
 		return expediente;
 	}
 	

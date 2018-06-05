@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class Mineral extends AbstractMasterEntity{
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="grupo_id")
 	private GrupoMineral grupo;
 	

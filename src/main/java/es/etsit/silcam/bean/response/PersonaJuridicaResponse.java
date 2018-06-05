@@ -2,7 +2,11 @@ package es.etsit.silcam.bean.response;
 
 import es.etsit.silcam.entity.PersonaFisica;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PersonaJuridicaResponse {
 
 	@ApiModelProperty(value = "Unique ID")

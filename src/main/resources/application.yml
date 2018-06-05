@@ -12,7 +12,12 @@ springfox:
  
 server:
      port: 8090
-
+silcam:
+     portal:
+         ciudado:
+              url: http://localhost:3000
+         bpm:
+              url: http://localhost:8080
 spring:
      data:
          mongodb:
@@ -23,7 +28,7 @@ spring:
          password: silcam04
      jpa:
          hibernate:
-              ddl-auto: create
+              ddl-auto: validate
          properties:
               hibernate:
                   enable_lazy_load_no_trans: true
