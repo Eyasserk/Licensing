@@ -1,7 +1,6 @@
 package es.etsit.silcam.service.impl;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Service;
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.FaseExpediente;
-import es.etsit.silcam.entity.Provincia;
-import es.etsit.silcam.entity.gis.Parcela;
 import es.etsit.silcam.exception.NotFoundException;
 import es.etsit.silcam.filter.ExpedienteFilter;
 import es.etsit.silcam.repository.EstadoSolicitudRepository;
@@ -68,16 +65,7 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 		if(expediente == null) {
 			throw new NotFoundException("Expediente no encontrado");
 		}
-		expediente.setParcelas(parcelaRepository.findByIdExpediente(expediente.getId()));
-		List<Provincia> provincias = new ArrayList<Provincia>();
-		if(expediente.getParcelas() != null) {
-			for(Parcela p : expediente.getParcelas()) {
-				if(!provincias.contains(p.getProvincia())) {
-					provincias.add(p.getProvincia());
-				}
-			}
-		}
-		expediente.setProvincias(provincias);
+		expediente.setParcela(parcelaRepository.findByIdExpediente(expediente.getId()));
 		return expediente;
 	}
 	
@@ -95,26 +83,15 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 		//Asignar numero de expediente
 		expediente.setNumeroExpediente(generateNumeroExpediente(expediente));
 		
-		//Calcular el era
-		double area = 0.0;
-		if(expediente.getParcelas() != null) {
-			for(Parcela parcela : expediente.getParcelas()) {
-				area += parcela.getArea();
-			}
-		}
-		expediente.setArea(area);
-		
 		log.info("Expediente para guardar: {}",expediente);
 		
 		//Guardarlo en BBDD
 		Expediente saved = expedienteRepository.save(expediente);
 		
-		//Guardar las parcelas
-		if(expediente.getParcelas() != null) {
-			for(Parcela parcela : expediente.getParcelas()) {
-				parcela.setExpedienteId(saved.getId());
-				parcela = parcelaRepository.create(parcela);
-			}
+		//Guardar la parcela
+		if(expediente.getParcela() != null) {
+			expediente.getParcela().setExpedienteId(saved.getId());
+			expediente.setParcela(parcelaRepository.create(expediente.getParcela()));
 		}
 		expediente.setId(saved.getId());
 		return expediente;

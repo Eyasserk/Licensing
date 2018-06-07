@@ -26,7 +26,7 @@ public class ParcelaServiceImpl implements ParcelaService{
 	}
 
 	@Override
-	public List<Parcela> findByIdExpediente(long idExpediente) {
+	public Parcela findByIdExpediente(long idExpediente) {
 		return parcelaRepository.findByIdExpediente(idExpediente);
 	}
 

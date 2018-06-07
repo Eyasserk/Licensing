@@ -1,7 +1,6 @@
 package es.etsit.silcam.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -47,9 +44,6 @@ public class Expediente {
 	@Column(name="idSolicitante", nullable=false)
 	private long idSolicitante;
 	
-	@Column(name="area", nullable=false)
-	private double area;
-	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipo_persona_id")
 	private TipoPersona tipoSolicitante;
@@ -70,14 +64,11 @@ public class Expediente {
 	@JoinColumn(name="tipo_solicitud_id")
 	private TipoSolicitud tipoSolicitud;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(schema="concesion")
-	private List<Mineral> minerales;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="mineral_id")
+	private Mineral mineral;
 	
 	@Transient
-	private List<Parcela> parcelas;
-	
-	@Transient
-	private List<Provincia> provincias;
+	private Parcela parcela;
 
 }

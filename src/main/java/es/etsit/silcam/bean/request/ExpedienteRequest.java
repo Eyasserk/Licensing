@@ -1,7 +1,6 @@
 package es.etsit.silcam.bean.request;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,11 +14,11 @@ import lombok.ToString;
 @ToString
 public class ExpedienteRequest {
 	
-	@ApiModelProperty(value = "Minerals")
-	private List<Long> minerales;
+	@ApiModelProperty(value = "Mineral")
+	private Long mineral;
 	
-	@ApiModelProperty(value = "Parcels")
-	private List<ParcelaRequest> parcelas;
+	@ApiModelProperty(value = "Parcel")
+	private ParcelaRequest parcela;
 	
 	@ApiModelProperty(value = "Tipo persona solicitante (fisica/juridica) ")
 	private long tipoPersonaSolicitante;

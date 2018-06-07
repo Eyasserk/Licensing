@@ -35,9 +35,9 @@ public class ParcelaRepositoryImpl implements ParcelaRepository{
 	}
 	
 	@Override
-	public List<Parcela> findByIdExpediente(long idExpediente){
+	public Parcela findByIdExpediente(long idExpediente){
 		Query query = new Query(Criteria.where("expedienteId").is(idExpediente));
-		return mongoOperations.find(query, Parcela.class);
+		return mongoOperations.findOne(query, Parcela.class);
 	}
 	
 	@Override

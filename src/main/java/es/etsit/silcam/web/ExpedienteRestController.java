@@ -23,7 +23,6 @@ import es.etsit.silcam.bean.request.ParcelaRequest;
 import es.etsit.silcam.bean.response.ErrorResponse;
 import es.etsit.silcam.bean.response.ExpedienteResponse;
 import es.etsit.silcam.entity.Expediente;
-import es.etsit.silcam.entity.Mineral;
 import es.etsit.silcam.entity.PersonaFisica;
 import es.etsit.silcam.entity.PersonaJuridica;
 import es.etsit.silcam.entity.TipoPersona;
@@ -140,8 +139,6 @@ public class ExpedienteRestController {
 		ExpedienteResponse response = null;
 		if(expediente != null) {
 			response = new ExpedienteResponse();
-			response.setArea(expediente.getArea());
-			response.setProvincias(expediente.getProvincias());
 			response.setEstado(expediente.getEstado());
 			response.setFase(expediente.getFase());
 			response.setFechaInicioExpediente(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(expediente.getFechaInicioExpediente()));
@@ -160,8 +157,8 @@ public class ExpedienteRestController {
 				response.setNombreSolicitante(persona.getRazonSocial());
 				response.setNumeroIdentificacionSolicitante(persona.getNumeroIdentificacion());
 			}
-			response.setParcelas(expediente.getParcelas());
-			response.setMinerales(expediente.getMinerales());
+			response.setParcela(expediente.getParcela());
+			response.setMineral(expediente.getMineral());
 			response.setTipoExpediente(expediente.getTipoExpediente());
 			response.setTipoSolicitud(expediente.getTipoSolicitud());
 		}
@@ -181,29 +178,13 @@ public class ExpedienteRestController {
 	
 	private Expediente convert(ExpedienteRequest request) {
 		Expediente expediente = new Expediente();
-		//Parcelas
-		List<Parcela> parcelas = null;
-		if(request.getParcelas() != null) {
-			parcelas = new ArrayList<Parcela>();
-			for(ParcelaRequest parcela : request.getParcelas()) {
-				parcelas.add(convert(parcela));
-			}
-		}
-		//Minerales
-		List<Mineral> minerales = null;
-		if(request.getMinerales() != null) {
-			minerales = new ArrayList<Mineral>();
-			for(Long idMineral : request.getMinerales()) {
-				minerales.add(mineralService.findById(idMineral));
-			}
-		}
+		expediente.setMineral(mineralService.findById(request.getMineral()));
 		//Tipo Expediente
 		expediente.setTipoExpediente(tipoExpedienteService.findById(request.getIdTipoExpediente()));
 		//Tipo Solicitud
 		expediente.setTipoSolicitud(tipoSolicitudService.findById(request.getIdTipoSolicitud()));
 		
-		expediente.setParcelas(parcelas);
-		expediente.setMinerales(minerales);
+		expediente.setParcela(convert(request.getParcela()));
 		expediente.setIdSolicitante(request.getIdPersonaSolicitante());
 		TipoPersona tipoPersona = new TipoPersona();
 		tipoPersona.setId(request.getTipoPersonaSolicitante());

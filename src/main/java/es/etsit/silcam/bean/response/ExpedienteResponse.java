@@ -1,11 +1,8 @@
 package es.etsit.silcam.bean.response;
 
-import java.util.List;
-
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.Mineral;
-import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoExpediente;
 import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.entity.gis.Parcela;
@@ -38,17 +35,11 @@ public class ExpedienteResponse {
 	@ApiModelProperty(value = "Phase")
 	private FaseExpediente fase;
 	
-	@ApiModelProperty(value = "Minerals")
-	private List<Mineral> minerales;
+	@ApiModelProperty(value = "Mineral")
+	private Mineral mineral;
 	
-	@ApiModelProperty(value = "Parcels")
-	private List<Parcela> parcelas;
-	
-	@ApiModelProperty(value = "Provinces")
-	private List<Provincia> provincias;
-	
-	@ApiModelProperty(value = "Area in HR")
-	private double area;
+	@ApiModelProperty(value = "Parcel")
+	private Parcela parcela;
 	
 	@ApiModelProperty(value = "Requester Identification Number")
 	private String numeroIdentificacionSolicitante;

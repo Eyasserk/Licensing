@@ -10,7 +10,7 @@ public interface ParcelaRepository {
 	
 	public Parcela findById(String id);
 	
-	public List<Parcela> findByIdExpediente(long idExpediente);
+	public Parcela findByIdExpediente(long idExpediente);
 	
 	public Parcela create(Parcela parcela);
 	
