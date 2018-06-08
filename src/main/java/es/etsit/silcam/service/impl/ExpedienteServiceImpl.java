@@ -93,8 +93,9 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 			expediente.getParcela().setExpedienteId(saved.getId());
 			expediente.setParcela(parcelaRepository.create(expediente.getParcela()));
 		}
-		expediente.setId(saved.getId());
-		return expediente;
+		saved.setParcela(expediente.getParcela());
+		log.info("Saved: {}",saved);
+		return saved;
 	}
 	
 	@Override

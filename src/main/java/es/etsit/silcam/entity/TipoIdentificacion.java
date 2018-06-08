@@ -1,7 +1,11 @@
 package es.etsit.silcam.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import es.etsit.silcam.core.AbstractMasterEntity;
 import lombok.Getter;
@@ -13,6 +17,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class TipoIdentificacion extends AbstractMasterEntity{
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class TipoIdentificacion extends AbstractMasterEntity implements Serializable{
+	
+	private static final long serialVersionUID = 6606131410383703531L;
 	
 }

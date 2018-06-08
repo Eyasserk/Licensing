@@ -1,5 +1,9 @@
 package es.etsit.silcam.bean.response;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.Mineral;
@@ -12,7 +16,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ExpedienteResponse {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ExpedienteResponse implements Serializable{
+
+	private static final long serialVersionUID = 5275874550006367418L;
 
 	@ApiModelProperty(value = "Unique ID")
 	private long id;

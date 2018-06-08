@@ -1,10 +1,10 @@
 package es.etsit.silcam.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import es.etsit.silcam.entity.gis.Parcela;
 import lombok.Getter;
@@ -23,7 +25,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Expediente {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Expediente implements Serializable{
+
+	private static final long serialVersionUID = -427877668228168792L;
 
 	@Id
 	@GeneratedValue( strategy=GenerationType.AUTO)
@@ -44,27 +49,27 @@ public class Expediente {
 	@Column(name="idSolicitante", nullable=false)
 	private long idSolicitante;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="tipo_persona_id")
 	private TipoPersona tipoSolicitante;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="estado_solicitud_id")
 	private EstadoSolicitud estado;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="fase_expediente_id")
 	private FaseExpediente fase;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="tipo_expediente_id")
 	private TipoExpediente tipoExpediente;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="tipo_solicitud_id")
 	private TipoSolicitud tipoSolicitud;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name="mineral_id")
 	private Mineral mineral;
 	

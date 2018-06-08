@@ -1,10 +1,13 @@
 package es.etsit.silcam.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import es.etsit.silcam.core.AbstractPerson;
 import lombok.Getter;
@@ -16,8 +19,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PersonaFisica extends AbstractPerson{
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class PersonaFisica extends AbstractPerson implements Serializable{
 	
+	private static final long serialVersionUID = 7576214808566334618L;
+
 	@Column(name="nombre", length=40, nullable=false)
 	private String nombre;
 	

@@ -1,5 +1,7 @@
 package es.etsit.silcam.bean.response;
 
+import java.io.Serializable;
+
 import es.etsit.silcam.entity.PersonaFisica;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -7,7 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PersonaJuridicaResponse {
+public class PersonaJuridicaResponse  implements Serializable{
+
+	private static final long serialVersionUID = -2589839400343943158L;
 
 	@ApiModelProperty(value = "Unique ID")
 	private long id;
