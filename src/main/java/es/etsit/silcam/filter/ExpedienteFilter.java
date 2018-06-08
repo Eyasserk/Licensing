@@ -10,17 +10,19 @@ import es.etsit.silcam.core.AbstractPageableFilter;
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.FaseExpediente;
-import es.etsit.silcam.entity.PersonaFisica;
-import es.etsit.silcam.entity.PersonaJuridica;
+import es.etsit.silcam.entity.GrupoMineral;
+import es.etsit.silcam.entity.Mineral;
 import es.etsit.silcam.entity.TipoExpediente;
+import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.exception.BadRequestException;
-import es.etsit.silcam.filter.model.Expediente_;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	
 	private static final String LIKE = "%";
@@ -40,7 +42,6 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	private Long idSolicitante;
 	private Long mineralId;
 	private Long grupoMineralId;
-	private Long provinciaId;
 	private Long tipoSolicitanteId;
 	
 	@Override
@@ -57,7 +58,6 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		Specification<Expediente> specByIdSolicitante = null;
 		Specification<Expediente> specByMineral = null;
 		Specification<Expediente> specByGrupoMineral = null;
-		Specification<Expediente> specByProvincia = null;
 		Specification<Expediente> specByTipoSolicitante = null;
 		
 		if(id != null) {
@@ -99,9 +99,6 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		if(grupoMineralId != null) {
 			specByGrupoMineral = getSpecificationByGrupoMineral();
 		}
-		if(provinciaId != null) {
-			specByProvincia = getSpecificationByProvincia();
-		}
 		if(tipoSolicitanteId != null) {
 			specByTipoSolicitante = getSpecificationByTipoSolicitante();
 		}
@@ -117,18 +114,17 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 				.and(specByIdSolicitante)
 				.and(specByMineral)
 				.and(specByGrupoMineral)
-				.and(specByProvincia)
 				.and(specByTipoSolicitante);	
 		
 	}
 	
 	private Specification<Expediente> getSpecificationById(){
-		return (root, query, cb) -> cb.equal(root.<Long> get(Expediente_.id), id);
+		return (root, query, cb) -> cb.equal(root.<Long>get("id"), id);
 	}
 	
 	private Specification<Expediente> getSpecificationByNumeroExpediente(){
 		return (root, query, cb) -> cb.like(
-				cb.lower(root.<String> get(Expediente_.numeroExpediente)),
+				cb.lower(root.<String>get("numeroExpediente")),
 				LIKE + numeroExpediente.toLowerCase() + LIKE);
 	}
 	
@@ -136,14 +132,14 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		return (root, query, cb) -> { 
 			Predicate p = null;
 			if((fechaInicioExpedienteStart!=null) && (fechaInicioExpedienteEnd!=null)){
-				p = cb.between(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteStart,fechaInicioExpedienteEnd);
+				p = cb.between(root.<Date>get("fechaInicioExpediente"), fechaInicioExpedienteStart,fechaInicioExpedienteEnd);
 			}
 			if((fechaInicioExpedienteStart!=null) && (fechaInicioExpedienteEnd==null))
 			{
-				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteStart);
+				p = cb.greaterThanOrEqualTo(root.<Date>get("fechaInicioExpediente"), fechaInicioExpedienteStart);
 			}
 			if((fechaInicioExpedienteStart==null) && (fechaInicioExpedienteEnd!=null)){
-				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioExpediente ), fechaInicioExpedienteEnd);
+				p = cb.lessThanOrEqualTo(root.<Date>get("fechaInicioExpediente"), fechaInicioExpedienteEnd);
 			}  
 			return p; 
 		}; 
@@ -153,14 +149,14 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		return (root, query, cb) -> { 
 			Predicate p = null;
 			if((fechaInicioActividadStart!=null) && (fechaInicioActividadEnd!=null)){
-				p = cb.between(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadStart,fechaInicioActividadEnd);
+				p = cb.between(root.<Date>get("fechaInicioActividad"), fechaInicioActividadStart,fechaInicioActividadEnd);
 			}
 			if((fechaInicioActividadStart!=null) && (fechaInicioActividadEnd==null))
 			{
-				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadStart);
+				p = cb.greaterThanOrEqualTo(root.<Date>get("fechaInicioActividad"), fechaInicioActividadStart);
 			}
 			if((fechaInicioActividadStart==null) && (fechaInicioActividadEnd!=null)){
-				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaInicioActividad ), fechaInicioActividadEnd);
+				p = cb.lessThanOrEqualTo(root.<Date>get("fechaInicioActividad"), fechaInicioActividadEnd);
 			}  
 			return p; 
 		}; 
@@ -170,14 +166,14 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		return (root, query, cb) -> { 
 			Predicate p = null;
 			if((fechaFinActividadStart!=null) && (fechaFinActividadEnd!=null)){
-				p = cb.between(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadStart,fechaFinActividadEnd);
+				p = cb.between(root.<Date>get("fechaFinActividad"), fechaFinActividadStart,fechaFinActividadEnd);
 			}
 			if((fechaFinActividadStart!=null) && (fechaFinActividadEnd==null))
 			{
-				p = cb.greaterThanOrEqualTo(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadStart);
+				p = cb.greaterThanOrEqualTo(root.<Date>get("fechaFinActividad"), fechaFinActividadStart);
 			}
 			if((fechaFinActividadStart==null) && (fechaFinActividadEnd!=null)){
-				p = cb.lessThanOrEqualTo(root.<Date>get(Expediente_.fechaFinActividad ), fechaFinActividadEnd);
+				p = cb.lessThanOrEqualTo(root.<Date>get("fechaFinActividad"), fechaFinActividadEnd);
 			}  
 			return p; 
 		}; 
@@ -185,77 +181,50 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	
 	private Specification<Expediente> getSpecificationByFase(){
 		return (root, query, cb) -> {
-			FaseExpediente fase = new FaseExpediente();
-			fase.setId(faseExpedienteId);
-			return cb.equal(root.<FaseExpediente>get(Expediente_.fase), fase);
+			return cb.equal(root.<FaseExpediente>get("fase").<Long>get("id"), faseExpedienteId);
 		};
 	}
 	
 	private Specification<Expediente> getSpecificationByEstado(){
 		return (root, query, cb) -> {
-			EstadoSolicitud estado = new EstadoSolicitud();
-			estado.setId(estadoSolicitudId);
-			return cb.equal(root.<EstadoSolicitud>get(Expediente_.estado), estado);
+			return cb.equal(root.<EstadoSolicitud>get("estado").<Long>get("id"), estadoSolicitudId);
 		};
 	}
 	
 	private Specification<Expediente> getSpecificationByTipoExpediente(){
 		return (root, query, cb) -> {
-			TipoExpediente tipoExpediente = new TipoExpediente();
-			tipoExpediente.setId(tipoExpedienteId);
-			return cb.equal(root.<TipoExpediente>get(Expediente_.tipoExpediente), tipoExpediente);
+			return cb.equal(root.<TipoExpediente>get("tipoExpediente").<Long>get("id"), tipoExpedienteId);
 		};
 	}
 	
 	private Specification<Expediente> getSpecificationByTipoSolicitud(){
 		return (root, query, cb) -> {
-			TipoSolicitud tipoSolicitud = new TipoSolicitud();
-			tipoSolicitud.setId(tipoSolicitudId);
-			return cb.equal(root.<TipoSolicitud>get(Expediente_.tipoSolicitud), tipoSolicitud);
+			return cb.equal(root.<TipoSolicitud>get("tipoSolicitud").<Long>get("id"), tipoSolicitanteId);
 		};
 	}
 	
 	private Specification<Expediente> getSpecificationByIdSolicitante(){
 		return (root, query, cb) -> {
-			Predicate p = null;
-			if(tipoSolicitanteId == 1L) {
-				//Persona fisica
-				PersonaFisica persona1 = new PersonaFisica();
-				persona1.setId(idSolicitante);
-				
-				p = cb.equal(root.<PersonaFisica>get(Expediente_.solicitanteFisico), persona1);
-			}else if(tipoSolicitanteId == 2L){
-				//Persona juridica
-				PersonaJuridica persona2 = new PersonaJuridica();
-				persona2.setId(idSolicitante);
-				
-				p = cb.equal(root.<PersonaJuridica>get(Expediente_.solicitanteJuridico), persona2);
-			}
-			return p;
+			return cb.equal(root.<Long>get("idSolicitante"), idSolicitante);
 		};
 	}
 	
 	private Specification<Expediente> getSpecificationByMineral(){
-		return (root, query, cb) -> null; 
+		return (root, query, cb) -> {
+			return cb.equal(root.<Mineral>get("mineral").<Long>get("id"), mineralId);
+		}; 
 	}
 	
 	private Specification<Expediente> getSpecificationByGrupoMineral(){
-		return (root, query, cb) -> null;
-	}
-	
-	private Specification<Expediente> getSpecificationByProvincia(){
-		return (root, query, cb) -> null;
+		return (root, query, cb) -> {
+			return cb.equal(root.<Mineral>get("mineral").<GrupoMineral>get("grupo").<Long>get("id"), grupoMineralId);
+		};
 	}
 	
 	private Specification<Expediente> getSpecificationByTipoSolicitante(){
-		/**
 		return (root, query, cb) -> {
-			TipoPersona tipo = new TipoPersona();
-			tipo.setId(tipoSolicitanteId);
-			return cb.equal(root.<TipoPersona>get(Expediente_.tipoSolicitante), tipo);
+			return cb.equal(root.<TipoPersona>get("tipoSolicitante").<Long>get("id"), tipoSolicitanteId);
 		};
-		*/
-		return null;
 	}
 	
 	@Override
@@ -275,7 +244,6 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		this.idSolicitante = null;
 		this.mineralId = null;
 		this.grupoMineralId = null;
-		this.provinciaId = null;
 		this.tipoSolicitanteId = null;
 	}
 

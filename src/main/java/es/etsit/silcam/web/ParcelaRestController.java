@@ -86,7 +86,7 @@ public class ParcelaRestController {
 			parcela = new Parcela();
 			parcela.setCoordenadas(request.getCoordenadas());
 			parcela.setExpedienteId(request.getExpedienteId());
-			parcela.setProvincia(provinciaService.findById(request.getProvinciaId()));
+			parcela.setProvincia(provinciaService.findById(request.getProvinciaId()).getNombre());
 		}
 		return parcela;
 	}

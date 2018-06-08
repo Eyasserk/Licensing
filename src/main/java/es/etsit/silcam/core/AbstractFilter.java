@@ -6,9 +6,11 @@ import org.springframework.data.domain.Sort.Order;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public abstract class AbstractFilter<E> implements Filter<E>{
 	
 	protected Sort sort;

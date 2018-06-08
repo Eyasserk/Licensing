@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import es.etsit.silcam.core.AbstractEntityMongo;
-import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.util.Coordenada;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Parcela extends AbstractEntityMongo  implements Serializable{
 	
 	private List<Coordenada> coordenadas;
 	
-	private Provincia provincia;
+	private String provincia;
 	
 	private double area;
 }

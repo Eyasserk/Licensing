@@ -6,10 +6,12 @@ import javax.persistence.MappedSuperclass;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @MappedSuperclass
+@ToString
 public class AbstractEntityMongo {
 
 	private String id;

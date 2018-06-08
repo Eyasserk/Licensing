@@ -2,6 +2,7 @@ package es.etsit.silcam.web;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +27,10 @@ import es.etsit.silcam.bean.response.ExpedienteResponse;
 import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.PersonaFisica;
 import es.etsit.silcam.entity.PersonaJuridica;
+import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.entity.gis.Parcela;
+import es.etsit.silcam.filter.ExpedienteFilter;
 import es.etsit.silcam.service.ExpedienteService;
 import es.etsit.silcam.service.MineralService;
 import es.etsit.silcam.service.PersonaFisicaService;
@@ -35,6 +40,7 @@ import es.etsit.silcam.service.TipoExpedienteService;
 import es.etsit.silcam.service.TipoSolicitudService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -103,12 +109,86 @@ public class ExpedienteRestController {
 			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorResponse.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
 	public @ResponseBody ResponseEntity<List<ExpedienteResponse>> find(
-			
+			@RequestParam(required = false) @ApiParam(value = "Mineral Group ID", name = "grupoId",
+			required = false) Long grupoId,
+			@RequestParam(required = false) @ApiParam(value = "Mineral ID", name = "mineralId",
+			required = false) Long mineralId,
+			@RequestParam(required = false) @ApiParam(value = "Provincia ID", name = "provinciaId",
+			required = false) Long provinciaId,
+			@RequestParam(required = false) @ApiParam(value = "Case Type ID", name = "tipoExpedienteId",
+			required = false) Long tipoExpedienteId,
+			@RequestParam(required = false) @ApiParam(value = "Case Phase ID", name = "faseExpedienteId",
+			required = false) Long faseExpedienteId,
+			@RequestParam(required = false) @ApiParam(value = "Request State ID", name = "estadoSolicitudId",
+			required = false) Long estadoSolicitudId,
+			@RequestParam(required = false) @ApiParam(value = "Request Type ID", name = "tipoSolicitudId",
+			required = false) Long tipoSolicitudId,
+			@RequestParam(required = false) @ApiParam(value = "Person Type ID", name = "tipoPersonaId",
+			required = false) Long tipoPersonaId,
+			@RequestParam(required = false) @ApiParam(value = "Person ID", name = "personId",
+			required = false) Long personId,
+			@RequestParam(required = false) @ApiParam(value = "Register Start Date", name = "fechaInicio",
+			required = false) Date fechaInicio,
+			@RequestParam(required = false) @ApiParam(value = "Register End Date", name = "fechaFin",
+			required = false) Date fechaFin,
+			@RequestParam(required = false) @ApiParam(value = "Activity Start Date from", name = "fechaInicioActividadStart",
+			required = false) Date fechaInicioActividadStart,
+			@RequestParam(required = false) @ApiParam(value = "Activity Start Date to", name = "fechaInicioActividadEnd",
+			required = false) Date fechaInicioActividadEnd,
+			@RequestParam(required = false) @ApiParam(value = "Activity End Date from", name = "fechaFinActividadStart",
+			required = false) Date fechaFinActividadStart,
+			@RequestParam(required = false) @ApiParam(value = "Activity End Date to", name = "fechaFinActividadEnd",
+			required = false) Date fechaFinActividadEnd,
+			@RequestParam(required = false) @ApiParam(value = "Page Number", name = "page",
+			required = false) Integer page,
+			@RequestParam(required = false) @ApiParam(value = "Page", name = "size",
+			required = false) Integer size
 			) {
-		log.info("Request find expedientes");
 		
-		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(null)), HttpStatus.OK);
+		ExpedienteFilter filter = new ExpedienteFilter();
+		filter.setFechaFinActividadEnd(fechaFinActividadEnd);
+		filter.setFechaFinActividadStart(fechaFinActividadStart);
+		filter.setFechaInicioActividadEnd(fechaInicioActividadEnd);
+		filter.setFechaInicioActividadStart(fechaInicioActividadStart);
+		filter.setFechaInicioExpedienteEnd(fechaFin);
+		filter.setFechaInicioExpedienteStart(fechaInicio);
+		filter.setGrupoMineralId(grupoId);
+		filter.setIdSolicitante(personId);
+		filter.setTipoSolicitanteId(tipoPersonaId);
+		filter.setMineralId(mineralId);
+		filter.setFaseExpedienteId(faseExpedienteId);
+		filter.setEstadoSolicitudId(estadoSolicitudId);
+		filter.setTipoExpedienteId(tipoExpedienteId);
+		filter.setTipoSolicitudId(tipoSolicitudId);
+		filter.setPageSize(size);
+		filter.setPageNumber(page);
 		
+		
+		log.info("Request find expedientes. Filter: {}",filter);
+		
+		return new ResponseEntity<List<ExpedienteResponse>>(convert(expedienteService.findAll(filter)), HttpStatus.OK);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/expedientes/{idExpediente}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Obtiene un expediente por su ID",
+			notes = "Obtiene un expediente por su ID")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK", response = ExpedienteResponse.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = ErrorResponse.class),
+			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorResponse.class),
+			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
+	public @ResponseBody ResponseEntity<ExpedienteResponse> getOne(
+			@ApiParam(value = "Id of the user.", required = true) @PathVariable long idExpediente
+			) {
+		log.info("Request find expediente: {}", idExpediente);
+		
+		return new ResponseEntity<ExpedienteResponse>(convert(expedienteService.findById(idExpediente)), HttpStatus.OK);	
 	}
 	
 	/**
@@ -182,13 +262,23 @@ public class ExpedienteRestController {
 		//Tipo Solicitud
 		expediente.setTipoSolicitud(tipoSolicitudService.findById(request.getIdTipoSolicitud()));
 		
-		expediente.setParcela(convert(request.getParcela()));
+		//Provincia
+		Provincia provincia = provinciaService.findById(request.getParcela().getProvinciaId());
+		
+		//Parcela
+		Parcela parcela = convert(request.getParcela());
+		if(provincia != null) {
+			parcela.setProvincia(provincia.getNombre());
+		}
+		
+		expediente.setParcela(parcela);
 		expediente.setIdSolicitante(request.getIdPersonaSolicitante());
 		TipoPersona tipoPersona = new TipoPersona();
 		tipoPersona.setId(request.getTipoPersonaSolicitante());
 		expediente.setTipoSolicitante(tipoPersona);
 		expediente.setFechaFinActividad(request.getActivityEndDate());
 		expediente.setFechaInicioActividad(request.getActivityStartDate());
+		expediente.setProvincia(provincia);
 		return expediente;
 	}
 	
@@ -196,7 +286,6 @@ public class ExpedienteRestController {
 		Parcela parcela = new Parcela();
 		parcela.setArea(request.getArea());
 		parcela.setCoordenadas(request.getCoordenadas());
-		parcela.setProvincia(provinciaService.findById(request.getProvinciaId()));
 		return parcela;
 	}
 

@@ -5,12 +5,14 @@ import org.springframework.data.domain.PageRequest;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public abstract class AbstractPageableFilter<E> extends AbstractFilter<E>{
 
-	@Value("${silcam.domain.filter.page.size}")
+	@Value("${silcam.domain.filter.page.size:10}")
 	private Integer pageSize;
 	
 	private Integer pageNumber = 0;

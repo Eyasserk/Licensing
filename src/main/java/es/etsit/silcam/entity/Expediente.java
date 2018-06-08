@@ -50,6 +50,10 @@ public class Expediente implements Serializable{
 	private long idSolicitante;
 	
 	@ManyToOne(optional = false)
+	@JoinColumn(name="provincia_id")
+	private Provincia provincia;
+	
+	@ManyToOne(optional = false)
 	@JoinColumn(name="tipo_persona_id")
 	private TipoPersona tipoSolicitante;
 	

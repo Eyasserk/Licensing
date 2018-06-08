@@ -10,10 +10,12 @@ import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoIdentificacion;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @MappedSuperclass
+@ToString
 public class AbstractPerson extends AbstractEntity{
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoIdentificacion.class)
