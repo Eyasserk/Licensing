@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
 
+import es.etsit.silcam.bean.response.ErrorResponse;
 import es.etsit.silcam.exception.AuthenticationException;
-import es.etsit.silcam.exception.NotFoundException;
 import es.etsit.silcam.exception.BadRequestException;
 import es.etsit.silcam.exception.ConflictException;
-
-import es.etsit.silcam.bean.response.ErrorResponse;
-import es.etsit.silcam.util.Constants;
-
+import es.etsit.silcam.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
@@ -34,7 +31,7 @@ public class SilcamExceptionHandler {
 		log.error("Returning HTTP 401. AuthenticationException: {}", e.getMessage());
 		ErrorResponse error = new ErrorResponse();
 		error.setCode(HttpStatus.UNAUTHORIZED.value());
-		error.setMessage(Constants.EXCEPTION_AUTH_FAILED);
+		error.setMessage(e.getMessage());
 
 		return new ResponseEntity<ErrorResponse>(error, HttpStatus.UNAUTHORIZED);
 	}

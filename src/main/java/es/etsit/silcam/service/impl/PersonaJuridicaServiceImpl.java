@@ -24,8 +24,12 @@ public class PersonaJuridicaServiceImpl implements PersonaJuridicaService{
 	
 	@Override
 	public List<PersonaJuridica> findAll(PersonaJuridicaFilter filter) {
-		// TODO implement here the filter
-		return personaJuridicaRepository.findAll();
+		if(filter == null) {
+			return personaJuridicaRepository.findAll();
+		}else {
+			return personaJuridicaRepository.findAll(filter.getSpecifications(), filter.getPageRequest())
+					.getContent();
+		}
 	}
 
 	@Override

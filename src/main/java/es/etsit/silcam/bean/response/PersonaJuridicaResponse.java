@@ -22,17 +22,26 @@ public class PersonaJuridicaResponse  implements Serializable{
 	@ApiModelProperty(value = "Representative")
 	private PersonaFisica representante;
 	
+	@ApiModelProperty(value = "Constitution Date")
+	private String fechaConstitucion;
+	
 	@ApiModelProperty(value = "ID Type")
 	private String tipoIdentificacion;
 	
 	@ApiModelProperty(value = "ID Number")
 	private String numeroIdentificacion;
 	
+	@ApiModelProperty(value = "Email")
+	private String email;
+	
+	@ApiModelProperty(value = "Phone Number")
+	private String telefono;
+	
 	@ApiModelProperty(value = "Fiscal Address")
 	private String direccionFiscal;
 	
-	@ApiModelProperty(value = "Fiscal Country")
-	private String paisFiscal;
+	@ApiModelProperty(value = "Fiscal Province")
+	private String provinciaFisical;
 	
 	@ApiModelProperty(value = "Nationality")
 	private String paisNacionalidad;

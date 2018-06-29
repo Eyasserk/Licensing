@@ -104,11 +104,13 @@ public class ExpedienteRestController {
 	@ApiOperation(value = "Devuelve la lista de expedientes",
 			notes = "Devuelve la lista de expedientes que corresponden con la query de busqueda")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "OK", response = ExpedienteResponse.class),
+			@ApiResponse(code = 200, message = "OK", responseContainer="list", response = ExpedienteResponse.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorResponse.class),
 			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorResponse.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
 	public @ResponseBody ResponseEntity<List<ExpedienteResponse>> find(
+			@RequestParam(required = false) @ApiParam(value = "Case Number Like %", name = "numeroExpedienteLike",
+			required = false) String numeroExpedienteLike,
 			@RequestParam(required = false) @ApiParam(value = "Mineral Group ID", name = "grupoId",
 			required = false) Long grupoId,
 			@RequestParam(required = false) @ApiParam(value = "Mineral ID", name = "mineralId",
@@ -139,20 +141,22 @@ public class ExpedienteRestController {
 			required = false) Date fechaFinActividadStart,
 			@RequestParam(required = false) @ApiParam(value = "Activity End Date to", name = "fechaFinActividadEnd",
 			required = false) Date fechaFinActividadEnd,
-			@RequestParam(required = false) @ApiParam(value = "Page Number", name = "page",
-			required = false) Integer page,
-			@RequestParam(required = false) @ApiParam(value = "Page", name = "size",
-			required = false) Integer size
+			@RequestParam(required = true) @ApiParam(value = "Page Number", name = "page",
+			required = true) Integer page,
+			@RequestParam(required = true) @ApiParam(value = "Page", name = "size",
+			required = true) Integer size
 			) {
 		
 		ExpedienteFilter filter = new ExpedienteFilter();
 		filter.setFechaFinActividadEnd(fechaFinActividadEnd);
 		filter.setFechaFinActividadStart(fechaFinActividadStart);
+		filter.setNumeroExpedienteLike(numeroExpedienteLike);
 		filter.setFechaInicioActividadEnd(fechaInicioActividadEnd);
 		filter.setFechaInicioActividadStart(fechaInicioActividadStart);
 		filter.setFechaInicioExpedienteEnd(fechaFin);
 		filter.setFechaInicioExpedienteStart(fechaInicio);
 		filter.setGrupoMineralId(grupoId);
+		filter.setProvinciaId(provinciaId);
 		filter.setIdSolicitante(personId);
 		filter.setTipoSolicitanteId(tipoPersonaId);
 		filter.setMineralId(mineralId);
@@ -184,7 +188,7 @@ public class ExpedienteRestController {
 			@ApiResponse(code = 401, message = "Unauthorized", response = ErrorResponse.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class) })
 	public @ResponseBody ResponseEntity<ExpedienteResponse> getOne(
-			@ApiParam(value = "Id of the user.", required = true) @PathVariable long idExpediente
+			@ApiParam(value = "Id of the case.", required = true) @PathVariable long idExpediente
 			) {
 		log.info("Request find expediente: {}", idExpediente);
 		
@@ -237,6 +241,7 @@ public class ExpedienteRestController {
 			}
 			response.setParcela(expediente.getParcela());
 			response.setMineral(expediente.getMineral());
+			response.setProvincia(expediente.getProvincia());
 			response.setTipoExpediente(expediente.getTipoExpediente());
 			response.setTipoSolicitud(expediente.getTipoSolicitud());
 		}

@@ -1,7 +1,7 @@
 package es.etsit.silcam.core;
 
 import javax.persistence.Column;
-import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
@@ -18,22 +18,34 @@ import lombok.ToString;
 @ToString
 public class AbstractPerson extends AbstractEntity{
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=TipoIdentificacion.class)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="tipo_identificacion_id")
 	private TipoIdentificacion tipoIdentificacion;
 	
 	@Column(name="numeroIdentificacion", length=10, nullable=false, unique=true)
 	private String numeroIdentificacion;
 	
+	@Column(name="email", length=100, nullable=false, unique=true)
+	private String email;
+	
+	@Column(name="telefono", length=20, nullable=true, unique=false)
+	private String telefono;
+	
 	@Column(name="direccion", length=255, nullable=false)
 	private String direccionResidencia;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Provincia.class)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="provincia_id")
 	private Provincia provincia;
 	
-	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Pais.class)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="nacionalidad_id")
 	private Pais nacionalidad;
 	
-	@Column(name="token", length=40, nullable=false)
+	/**
+	 * MD5 hash de la contraseña
+	 */
+	@Column(name="token", length=32, nullable=false)
 	private String token;
 	
 	@Column(name="activo", nullable=false)

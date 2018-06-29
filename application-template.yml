@@ -11,24 +11,24 @@ springfox:
                 path: /swagger.json
  
 server:
-     port: 8090
+     port: EXAMPLE --> 8090
 silcam:
      portal:
          ciudado:
-              url: http://localhost:3000
+              url: EXAMPLE --> http://localhost:3000
          bpm:
-              url: http://localhost:8080
+              url: EXAMPLE --> http://localhost:8080
      security:
          jwt:
-              key: bxQcuPMX3cIaVgZ
+              key: EXAMPLE --> 123456abcdef
 spring:
      data:
          mongodb:
-              uri: mongodb://localhost:27017/dbgis
+              uri: EXAMPLE --> mongodb://localhost:27017/mongo
      datasource:
-         url: jdbc:postgresql://localhost:5432/silcam
-         username: silcam
-         password: silcam04
+         url: EXAMPLE --> jdbc:postgresql://localhost:5432/jdbc
+         username: EXAMPLE --> postgres
+         password: EXAMPLE --> postgres
      jpa:
          hibernate:
               ddl-auto: validate
@@ -36,22 +36,22 @@ spring:
               hibernate:
                   enable_lazy_load_no_trans: true
      mail:
-         host: smtp.boaweng.gsnetcloud.corp
-         port: 25
-         user:
-         password:
+         host: EXAMPLE --> smt.host.com
+         port: EXAMPLE --> 25
+         user: EXAMPLE --> user
+         password: EXAMPLE --> password
          protocol: smtp
          tls: false
          auth: false
-         from: c3video.no_reply@produban.com
+         from: EXAMPLE --> no-reply@silcam.com
 security:
     wso2:
-        enabled: false
+        enabled: EXAMPLE --> false
     basic:
-        enabled: false
+        enabled: EXAMPLE --> false
 management:
     security:
-        enabled: false
+        enabled: EXAMPLE --> false
 logging:
     level:
         org:

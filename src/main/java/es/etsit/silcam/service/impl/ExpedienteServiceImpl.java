@@ -1,6 +1,5 @@
 package es.etsit.silcam.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -114,11 +113,14 @@ public class ExpedienteServiceImpl implements ExpedienteService{
 	
 	private String generateNumeroExpediente(Expediente expediente) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(new SimpleDateFormat("yyyyMM").format(new Date()));
+		sb.append("1"); //01: Concesion (1 dígisto)
+		sb.append("2"); //02: Explotación (1 dígito)
+		sb.append(String.format("%02d", expediente.getMineral().getId())); //id mineral (2 dígitos) 
 		sb.append("-");
-		sb.append("01"); //01: Concesion
+		sb.append(String.format("%02d", expediente.getProvincia().getId()));
 		sb.append("-");
-		sb.append(new Date().getTime());
+		sb.append(String.valueOf(new Date().getTime()).substring(0, 13)); // (13 dígitos hasta el apocalipsis
+																			//pero por si acaso, lo acortamo)
 		return sb.toString();
 	}
 	

@@ -30,6 +30,12 @@ public class PersonaFisicaResponse  implements Serializable{
 	@ApiModelProperty(value = "ID Number")
 	private String numeroIdentificacion;
 	
+	@ApiModelProperty(value = "Email")
+	private String email;
+	
+	@ApiModelProperty(value = "Phone Number")
+	private String telefono;
+	
 	@ApiModelProperty(value = "Nationality")
 	private String nacionalidad;
 	
@@ -41,8 +47,5 @@ public class PersonaFisicaResponse  implements Serializable{
 	
 	@ApiModelProperty(value = "Residence Province")
 	private String provinciaResidencia;
-	
-	@ApiModelProperty(value = "Residence Country")
-	private String paisResidencia;
 	
 }

@@ -24,8 +24,12 @@ public class PersonaFisicaServiceImpl implements PersonaFisicaService{
 	
 	@Override
 	public List<PersonaFisica> findAll(PersonaFisicaFilter filter) {
-		// TODO implement here the filter
-		return personaFisicaRepository.findAll();
+		if(filter == null) {
+			return personaFisicaRepository.findAll();
+		}else {
+			return personaFisicaRepository.findAll(filter.getSpecifications(), filter.getPageRequest())
+					.getContent();
+		}
 	}
 
 	@Override

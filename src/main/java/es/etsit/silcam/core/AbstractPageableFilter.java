@@ -13,7 +13,7 @@ import lombok.ToString;
 public abstract class AbstractPageableFilter<E> extends AbstractFilter<E>{
 
 	@Value("${silcam.domain.filter.page.size:10}")
-	private Integer pageSize;
+	private Integer pageSize = 10;
 	
 	private Integer pageNumber = 0;
 	

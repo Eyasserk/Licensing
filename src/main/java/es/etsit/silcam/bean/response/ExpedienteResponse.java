@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import es.etsit.silcam.entity.EstadoSolicitud;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.Mineral;
+import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoExpediente;
 import es.etsit.silcam.entity.TipoSolicitud;
 import es.etsit.silcam.entity.gis.Parcela;
@@ -44,6 +45,9 @@ public class ExpedienteResponse implements Serializable{
 	
 	@ApiModelProperty(value = "Mineral")
 	private Mineral mineral;
+	
+	@ApiModelProperty(value = "Province")
+	private Provincia provincia;
 	
 	@ApiModelProperty(value = "Parcel")
 	private Parcela parcela;

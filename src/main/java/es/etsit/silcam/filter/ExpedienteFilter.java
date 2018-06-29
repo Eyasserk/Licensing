@@ -12,6 +12,7 @@ import es.etsit.silcam.entity.Expediente;
 import es.etsit.silcam.entity.FaseExpediente;
 import es.etsit.silcam.entity.GrupoMineral;
 import es.etsit.silcam.entity.Mineral;
+import es.etsit.silcam.entity.Provincia;
 import es.etsit.silcam.entity.TipoExpediente;
 import es.etsit.silcam.entity.TipoPersona;
 import es.etsit.silcam.entity.TipoSolicitud;
@@ -29,6 +30,7 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 
 	private Long id;
 	private String numeroExpediente;
+	private String numeroExpedienteLike;
 	private Date fechaInicioExpedienteStart;
 	private Date fechaInicioExpedienteEnd;
 	private Date fechaInicioActividadStart;
@@ -42,12 +44,14 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	private Long idSolicitante;
 	private Long mineralId;
 	private Long grupoMineralId;
+	private Long provinciaId;
 	private Long tipoSolicitanteId;
 	
 	@Override
 	public Specification<Expediente> getSpecifications() {
 		Specification<Expediente> specById = null;
 		Specification<Expediente> specByNumeroExpediente = null;
+		Specification<Expediente> specByNumeroExpedienteLike = null;
 		Specification<Expediente> specByFechaInicioExpediente = null;
 		Specification<Expediente> specByFechaInicioActividad = null;
 		Specification<Expediente> specByFechaFinActividad = null;
@@ -58,6 +62,7 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		Specification<Expediente> specByIdSolicitante = null;
 		Specification<Expediente> specByMineral = null;
 		Specification<Expediente> specByGrupoMineral = null;
+		Specification<Expediente> specByProvincia = null;
 		Specification<Expediente> specByTipoSolicitante = null;
 		
 		if(id != null) {
@@ -65,6 +70,9 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		}
 		if(numeroExpediente != null && !numeroExpediente.isEmpty()) {
 			specByNumeroExpediente = getSpecificationByNumeroExpediente();
+		}
+		if(numeroExpedienteLike != null && !numeroExpedienteLike.isEmpty()) {
+			specByNumeroExpedienteLike = getSpecificationByNumeroExpedienteLike();
 		}
 		if(fechaInicioExpedienteStart != null || fechaInicioExpedienteEnd != null) {
 			specByFechaInicioExpediente = getSpecificationByFechaInicioExpediente();
@@ -99,11 +107,15 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		if(grupoMineralId != null) {
 			specByGrupoMineral = getSpecificationByGrupoMineral();
 		}
+		if(provinciaId != null) {
+			specByProvincia = getSpecificationByProvincia();
+		}
 		if(tipoSolicitanteId != null) {
 			specByTipoSolicitante = getSpecificationByTipoSolicitante();
 		}
 		return Specification.where(specById)
 				.and(specByNumeroExpediente)
+				.and(specByNumeroExpedienteLike)
 				.and(specByFechaInicioExpediente)
 				.and(specByFechaInicioActividad)
 				.and(specByFechaFinActividad)
@@ -114,6 +126,7 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 				.and(specByIdSolicitante)
 				.and(specByMineral)
 				.and(specByGrupoMineral)
+				.and(specByProvincia)
 				.and(specByTipoSolicitante);	
 		
 	}
@@ -123,9 +136,15 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	}
 	
 	private Specification<Expediente> getSpecificationByNumeroExpediente(){
+		return (root, query, cb) -> cb.equal(
+				cb.lower(root.<String>get("numeroExpediente")),
+				numeroExpediente.toLowerCase());
+	}
+	
+	private Specification<Expediente> getSpecificationByNumeroExpedienteLike(){
 		return (root, query, cb) -> cb.like(
 				cb.lower(root.<String>get("numeroExpediente")),
-				LIKE + numeroExpediente.toLowerCase() + LIKE);
+				LIKE + numeroExpedienteLike.toLowerCase() + LIKE);
 	}
 	
 	private Specification<Expediente> getSpecificationByFechaInicioExpediente(){
@@ -221,6 +240,12 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		};
 	}
 	
+	private Specification<Expediente> getSpecificationByProvincia(){
+		return (root, query, cb) -> {
+			return cb.equal(root.<Provincia>get("provincia").<Long>get("id"), provinciaId);
+		};
+	}
+	
 	private Specification<Expediente> getSpecificationByTipoSolicitante(){
 		return (root, query, cb) -> {
 			return cb.equal(root.<TipoPersona>get("tipoSolicitante").<Long>get("id"), tipoSolicitanteId);
@@ -231,6 +256,7 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 	public void reset() {
 		this.id = null;
 		this.numeroExpediente = null;
+		this.numeroExpedienteLike = null;
 		this.fechaInicioExpedienteStart = null;
 		this.fechaInicioExpedienteEnd = null;
 		this.fechaInicioActividadStart = null;
@@ -245,6 +271,7 @@ public class ExpedienteFilter extends AbstractPageableFilter<Expediente>{
 		this.mineralId = null;
 		this.grupoMineralId = null;
 		this.tipoSolicitanteId = null;
+		this.provinciaId = null;
 	}
 
 }
